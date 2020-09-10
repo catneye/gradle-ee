@@ -1,0 +1,5 @@
+rootProject.name = 'gradle-ear'
+
+include ':gradle-ejb'
+include ':gradle-war'
+

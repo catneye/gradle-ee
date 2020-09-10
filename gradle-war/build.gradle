@@ -1,0 +1,16 @@
+description = 'gradle-war'
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'war'
+
+dependencies {
+    providedCompile project(':gradle-ejb')
+    implementation "javax.servlet:javax.servlet-api:3.1.0"
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1'
+    implementation 'javax.ejb:javax.ejb-api:3.2.2'
+    implementation 'javax.json:javax.json-api:1.1.4'
+    implementation 'javax.json.bind:javax.json.bind-api:1.0'
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="6">
+  <display-name>gradle-ear</display-name>
+  <module>
+    <ejb>gradle-ejb.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>gradle-war.war</web-uri>
+      <context-root>gradle-war</context-root>
+    </web>
+  </module>
+  <library-directory>lib</library-directory>
+</application>

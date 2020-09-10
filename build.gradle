@@ -1,0 +1,22 @@
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+}
+
+apply plugin: 'ear'
+
+dependencies {
+    deploy project(path: ':gradle-ejb', configuration: 'archives')
+    deploy project(path: ':gradle-war', configuration: 'archives')
+    //compile 'com.mkring.wildlydeplyplugin:wildfly-deploy-gradle-plugin:0.3.0-wildfly15'
+}
+//apply plugin: "com.mkring.wildlydeplyplugin.deploy-wildfly-plugin"
+
