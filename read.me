@@ -1,0 +1,21 @@
+This a simple gradle test project implements RSapi with ee backend.
+
+Front api have methods:
+
+getAllProducts
+get all products
+
+getProduct/{id}
+get single product by id
+
+getProducts/{name}
+get products by name
+
+setProduct/{obj}
+set single product. This method testing ee jsonb deserialization from json string to realy object
+as example:
+gradle-war/rest/ProductAPI/setProduct/{"product":{"adddate": "2020-09-10T07:05:52.234Z[UTC]","id": 1,"name": "p11","price": 12.12}}
+if id==0 then will be create new product with any fields.
+
+removeProduct/{id}
+remove single product.
