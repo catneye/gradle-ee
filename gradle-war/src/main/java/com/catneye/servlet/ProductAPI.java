@@ -18,6 +18,7 @@ import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
+import javax.json.stream.JsonParsingException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
@@ -86,10 +87,14 @@ public class ProductAPI extends Application {
     @Produces(MediaType.APPLICATION_JSON)
     public String setProduct(@PathParam("obj") String obj) {
         Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "setProduct : {0}", obj);
-        JsonReader jsonReader = Json.createReader(new StringReader(obj));
-        JsonObject baseJson = jsonReader.readObject();
-        Product p = jsonb.fromJson(baseJson.get("product").toString(), Product.class);
-        return jsonb.toJson(pBean.setProduct(p));
+        try {
+            JsonReader jsonReader = Json.createReader(new StringReader(obj));
+            JsonObject baseJson = jsonReader.readObject();
+            Product p = jsonb.fromJson(baseJson.get("product").toString(), Product.class);
+            return jsonb.toJson(pBean.setProduct(p));
+        } catch (JsonParsingException ex) {
+            return (jsonb.toJson("JsonParsingException"));
+        }
     }
 
     @DELETE
