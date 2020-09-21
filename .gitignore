@@ -1,0 +1,4 @@
+.gradle
+build/*
+gradle-ejb/build/*
+gradle-war/build/*

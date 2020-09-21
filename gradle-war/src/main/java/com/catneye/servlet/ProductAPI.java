@@ -6,7 +6,9 @@
 package com.catneye.servlet;
 
 import com.catneye.bean.ProductBeanRemote;
-import com.catneye.db.Product;
+import com.catneye.dto.ProductInfo;
+import com.catneye.entity.Product;
+import com.catneye.util.Constants;
 import java.io.StringReader;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,9 +47,8 @@ public class ProductAPI extends Application {
     Jsonb jsonb = JsonbBuilder.create(jsonconfig);
 
     public ProductAPI() {
-
         try {
-            String lookupName = "java:global/gradle-ear/gradle-ejb/ProductBean!com.catneye.bean.ProductBeanRemote";
+            String lookupName = Constants.SERVICE_BEAN_NAME;
             pBean = (ProductBeanRemote) InitialContext.doLookup(lookupName);
         } catch (NamingException ex) {
             Logger.getLogger(ProductAPI.class.getName()).log(Level.SEVERE, "ProductAPI : {0}", ex);
@@ -67,7 +68,7 @@ public class ProductAPI extends Application {
     @Produces(MediaType.APPLICATION_JSON)
     public String getProduct(@PathParam("id") Integer id) {
         Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "getProduct : {0}", id);
-        Product p = pBean.getProduct(id);
+        ProductInfo p = pBean.getProduct(id);
         return jsonb.toJson(p != null ? p : new Product());
     }
 
@@ -76,7 +77,7 @@ public class ProductAPI extends Application {
     @Produces(MediaType.APPLICATION_JSON)
     public String getProducts(@PathParam("name") String name) {
         Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "getProducts : {0}", name);
-        List<Product> ps = pBean.getProducts(name);
+        List<ProductInfo> ps = pBean.getProducts(name);
         return jsonb.toJson(ps);
     }
 
@@ -90,7 +91,7 @@ public class ProductAPI extends Application {
         try {
             JsonReader jsonReader = Json.createReader(new StringReader(obj));
             JsonObject baseJson = jsonReader.readObject();
-            Product p = jsonb.fromJson(baseJson.get("product").toString(), Product.class);
+            ProductInfo p = jsonb.fromJson(baseJson.get("product").toString(), ProductInfo.class);
             return jsonb.toJson(pBean.setProduct(p));
         } catch (JsonParsingException ex) {
             return (jsonb.toJson("JsonParsingException"));
@@ -99,8 +100,9 @@ public class ProductAPI extends Application {
 
     @DELETE
     @Path("removeProduct/{id}")
-    public void removeProduct(@PathParam("id") Integer id) {
+    public String removeProduct(@PathParam("id") Integer id) {
         Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "removeProduct : {0}", id);
-        pBean.removeProduct(id);
+        ProductInfo p = pBean.removeProduct(id);
+        return jsonb.toJson(p);
     }
 }
