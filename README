@@ -1,4 +1,4 @@
-This a simple gradle test project implements RSapi with ee backend.
+This is simple gradle test project implements RSapi with j2ee ejb backend.
 
 Front api have methods:
 
