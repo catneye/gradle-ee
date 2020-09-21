@@ -5,7 +5,10 @@
  */
 package com.catneye.bean;
 
-import com.catneye.db.Product;
+import com.catneye.dto.ProductInfo;
+import com.catneye.entity.Product;
+import com.catneye.util.TransformUtil;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,19 +29,27 @@ public class ProductBean implements ProductBeanRemote {
     private EntityManager em;
 
     @Override
-    public List<Product> getProducts() {
+    public List<ProductInfo> getProducts() {
+        List<ProductInfo> ret = new ArrayList<>();
         Query query = em.createNamedQuery("Product.findAll");
-        List<Product> ret = query.getResultList();
+        List<Product> data = query.getResultList();
+        for (Product p : data) {
+            ProductInfo pi = (ProductInfo) TransformUtil.clone(new ProductInfo(), p);
+            pi.setResult(true);
+            ret.add(pi);
+        }
         return ret;
     }
 
     @Override
-    public Product getProduct(Integer id) {
-        Product ret = null;
+    public ProductInfo getProduct(Integer id) {
+        ProductInfo ret = null;
         try {
             Query query = em.createNamedQuery("Product.findById");
             query.setParameter("id", id);
-            ret = (Product) query.getSingleResult();
+            Product data = (Product) query.getSingleResult();
+            ret = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
+            ret.setResult(true);
         } catch (NoResultException ex) {
             Logger.getLogger(ProductBean.class.getName()).log(Level.WARNING, "getProduct : {0} NoResultException", id);
         }
@@ -46,54 +57,66 @@ public class ProductBean implements ProductBeanRemote {
     }
 
     @Override
-    public List<Product> getProducts(String name) {
+    public List<ProductInfo> getProducts(String name) {
+        List<ProductInfo> ret = new ArrayList<>();
         Query query = em.createNamedQuery("Product.findByName");
         query.setParameter("name", name);
-        List<Product> ret = query.getResultList();
+        List<Product> data = query.getResultList();
+        for (Product p : data) {
+            ProductInfo pi = (ProductInfo) TransformUtil.clone(new ProductInfo(), p);
+            pi.setResult(true);
+            ret.add(pi);
+        }
         return ret;
     }
 
     @Override
-    public Product setProduct(Product product) {
+    public ProductInfo setProduct(ProductInfo product) {
 
-        Product ret = null;
+        Product data = null;
         if (product.getId() != null) {
             Query query = em.createNamedQuery("Product.findById");
             query.setParameter("id", product.getId());
             try {
-                ret = (Product) query.getSingleResult();
-                ret.setAdddate(product.getAdddate());
-                ret.setName(product.getName());
-                ret.setPrice(product.getPrice());
+                data = (Product) query.getSingleResult();
+                data.setAdddate(product.getAdddateUtil());
+                data.setName(product.getName());
+                data.setPrice(product.getPrice());
 
-                em.merge(ret);
+                em.merge(data);
                 em.flush();
             } catch (NoResultException ex) {
                 Logger.getLogger(ProductBean.class.getName()).log(Level.INFO, "getProduct : {0} NoResultException, Create new ", product.getId());
             }
         }
-        if (ret == null) {
-            ret = new Product();
-            ret.setAdddate(product.getAdddate());
-            ret.setName(product.getName());
-            ret.setPrice(product.getPrice());
-            em.persist(ret);
+        if (data == null) {
+            data = new Product();
+            data.setAdddate(product.getAdddateUtil());
+            data.setName(product.getName());
+            data.setPrice(product.getPrice());
+            em.persist(data);
             em.flush();
         }
-        return ret;
+
+        ProductInfo pi = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
+        pi.setResult(true);
+        return pi;
     }
 
     @Override
-    public void removeProduct(Integer id) {
+    public ProductInfo removeProduct(Integer id) {
 
-        Product ret = null;
+        ProductInfo ret = null;
         try {
             Query query = em.createNamedQuery("Product.findById");
             query.setParameter("id", id);
-            ret = (Product) query.getSingleResult();
-            em.remove(ret);
+            Product data = (Product) query.getSingleResult();
+            ret = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
+            ret.setResult(true);
+            em.remove(data);
         } catch (NoResultException ex) {
             Logger.getLogger(ProductBean.class.getName()).log(Level.INFO, "removeProduct : {0} NoResultException", id);
         }
+        return ret;
     }
 }
