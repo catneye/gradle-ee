@@ -10,7 +10,7 @@ package com.catneye.util;
  * @author plintus
  */
 public interface Constants {
-    public String SERVICE_NAME = "Poduct service";
+    public String SERVICE_NAME = "Product service";
     public String SERVICE_BEAN_NAME
             = "java:global/gradle-ear/gradle-ejb/ProductBean!com.catneye.bean.ProductBeanRemote";
 }
