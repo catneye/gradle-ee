@@ -30,6 +30,8 @@ public class DateUtil {
     /**
      * Calls {@link #asLocalDate(Date, ZoneId)} with the system default time
      * zone.
+     * @param date
+     * @return 
      */
     public static LocalDate asLocalDate(java.util.Date date) {
         return asLocalDate(date, ZoneId.systemDefault());
