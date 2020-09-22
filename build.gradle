@@ -7,6 +7,15 @@ allprojects {
     }
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.bmuschko:gradle-cargo-plugin:2.7.1"
+    }
+}
+
 subprojects {
     apply plugin: 'java'
 }
@@ -16,7 +25,40 @@ apply plugin: 'ear'
 dependencies {
     deploy project(path: ':gradle-ejb', configuration: 'archives')
     deploy project(path: ':gradle-war', configuration: 'archives')
-    //compile 'com.mkring.wildlydeplyplugin:wildfly-deploy-gradle-plugin:0.3.0-wildfly15'
 }
-//apply plugin: "com.mkring.wildlydeplyplugin.deploy-wildfly-plugin"
 
+apply plugin: 'com.bmuschko.cargo'
+
+dependencies {
+          def cargoVersion = '1.8.1'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+          "org.codehaus.cargo:cargo-ant:$cargoVersion",
+          "commons-discovery:commons-discovery:0.5",
+          "org.apache.commons:commons-parent:22",
+          "org.wildfly.core:wildfly-controller-client:3.0.10.Final"
+}
+
+cargo {
+    containerId = 'wildfly20x'
+    //port = 9990
+
+    deployable {
+        file = 'build/libs/gradle-ear.ear'
+        //context = '/gradle-ear'
+    }
+
+    remote {
+        hostname = '127.0.0.1'
+        username = 'olegus'
+        password = 'olegus'
+    }
+
+    /*local {
+        homeDir = file('~/wildfly-20.0.1.Final')
+        outputFile = file('build/output.log')
+        startStopTimeout = 60000
+        todir='~/wildfly-20.0.1.Final/standalone/deployments'
+        overwrite=true
+
+    }*/
+}
