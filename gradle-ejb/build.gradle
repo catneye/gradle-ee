@@ -8,4 +8,5 @@ dependencies {
     implementation "org.hibernate:hibernate-core:5.2.18.Final"
     implementation 'javax.ejb:javax.ejb-api:3.2.2'
     implementation 'javax.jms:javax.jms-api:2.0.1'
+    implementation 'javax:javaee-web-api:8.0.1'
 }
