@@ -30,7 +30,7 @@ dependencies {
 apply plugin: 'com.bmuschko.cargo'
 
 dependencies {
-          def cargoVersion = '1.8.1'
+    def cargoVersion = '1.8.1'
     cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
           "org.codehaus.cargo:cargo-ant:$cargoVersion",
           "commons-discovery:commons-discovery:0.5",
@@ -54,11 +54,11 @@ cargo {
     }
 
     /*local {
-        homeDir = file('~/wildfly-20.0.1.Final')
-        outputFile = file('build/output.log')
-        startStopTimeout = 60000
-        todir='~/wildfly-20.0.1.Final/standalone/deployments'
-        overwrite=true
+    homeDir = file('~/wildfly-20.0.1.Final')
+    outputFile = file('build/output.log')
+    startStopTimeout = 60000
+    todir='~/wildfly-20.0.1.Final/standalone/deployments'
+    overwrite=true
 
     }*/
 }
