@@ -49,8 +49,8 @@ cargo {
 
     remote {
         hostname = '127.0.0.1'
-        username = 'olegus'
-        password = 'olegus'
+        username = 'developer'
+        password = 'developer'
     }
 
     /*local {
