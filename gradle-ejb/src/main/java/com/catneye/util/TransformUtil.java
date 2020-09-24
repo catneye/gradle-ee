@@ -16,11 +16,20 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Zaleskovskiy
+ * @author Zaleskovskiy, plintus
  */
 public class TransformUtil {
     
-    public static Object update(Object target, Object source, boolean newpreferred) {
+    /**
+     * Update data from Source object to Target object
+     * Objects must be not null
+     * 
+     * @param target Target object 
+     * @param source Source object
+     * @param srcPreferred If true then new data from Source is preffered
+     * @return modifyed Targert object
+     */
+    public static Object update(Object target, Object source, boolean srcPreferred) {
         Class cls = target.getClass();
         if (!cls.getName().equals(source.getClass().getName())) {
             throw new DifferentClassUpdateException("Unable to update " + cls.getName() + " with object of " + source.getClass().getName());
@@ -35,7 +44,7 @@ public class TransformUtil {
             try {
                 val = field.get(target);
                 newval = field.get(source);
-                if (newpreferred && (newval != null)) {
+                if (srcPreferred && (newval != null)) {
                     field.set(target, newval);
                 }
             } catch (NullPointerException | IllegalAccessException ex) {
@@ -51,6 +60,14 @@ public class TransformUtil {
         return target;
     }
 
+    /**
+     * Transform data between two similar objects
+     * Objects must be not null
+     * 
+     * @param target Target object 
+     * @param source Source object
+     * @return modifyed Targert object
+     */
     public static Object clone(Object target, Object source) {
         Class tcls = target.getClass();
         Class scls = source.getClass();

@@ -30,6 +30,10 @@ public class MessageReceiverBean implements MessageListener {
     @Resource
     private MessageDrivenContext mdc;
 
+    /**
+     * Receive text message from jms queue.
+     * @param msg contains message. 
+     */
     @Override
     public void onMessage(Message msg) {
         if (msg != null) {

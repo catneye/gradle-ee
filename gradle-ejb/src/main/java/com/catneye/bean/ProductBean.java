@@ -28,6 +28,11 @@ public class ProductBean implements ProductBeanRemote {
     @PersistenceContext(unitName = "gradle-ejbPU")
     private EntityManager em;
 
+    /**
+     * Gets all Products list.
+     *
+     * @return this Product objects.
+     */
     @Override
     public List<ProductInfo> getProducts() {
         List<ProductInfo> ret = new ArrayList<>();
@@ -41,6 +46,11 @@ public class ProductBean implements ProductBeanRemote {
         return ret;
     }
 
+    /**
+     * Get Product.
+     * @param id This Product id.  
+     * @return this Product object.
+     */
     @Override
     public ProductInfo getProduct(Integer id) {
         ProductInfo ret = null;
@@ -56,6 +66,11 @@ public class ProductBean implements ProductBeanRemote {
         return ret;
     }
 
+    /**
+     * Get Products list.
+     * @param name This Product name.  
+     * @return this Product objects.
+     */
     @Override
     public List<ProductInfo> getProducts(String name) {
         List<ProductInfo> ret = new ArrayList<>();
@@ -70,6 +85,11 @@ public class ProductBean implements ProductBeanRemote {
         return ret;
     }
 
+    /**
+     * Set Product.
+     * @param product Is object.
+     * @return this modified Product object.
+     */
     @Override
     public ProductInfo setProduct(ProductInfo product) {
 
@@ -103,6 +123,11 @@ public class ProductBean implements ProductBeanRemote {
         return pi;
     }
 
+    /**
+     * Remove Product.
+     * @param id is Product id.  
+     * @return is removed Product object.
+     */
     @Override
     public ProductInfo removeProduct(Integer id) {
 

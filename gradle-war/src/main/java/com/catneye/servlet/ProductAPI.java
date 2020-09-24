@@ -40,15 +40,18 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/ProductAPI")
 public class ProductAPI extends Application {
-    
+
     @EJB
     ProductBeanRemote pBean;
     @EJB
     MessageSenderBeanRemote msgBean;
-    
+
     JsonbConfig jsonconfig = new JsonbConfig().setProperty("jsonb.to.json.encoding", "UTF-8");
     Jsonb jsonb = JsonbBuilder.create(jsonconfig);
-    
+
+    /**
+     * Class constructor.
+     */
     public ProductAPI() {
         try {
             pBean = (ProductBeanRemote) InitialContext.doLookup(Constants.SERVICE_BEAN_NAME);
@@ -57,7 +60,12 @@ public class ProductAPI extends Application {
             Logger.getLogger(ProductAPI.class.getName()).log(Level.SEVERE, "ProductAPI : {0}", ex);
         }
     }
-    
+
+    /**
+     * Gets all Products list.
+     *
+     * @return this Product objects as JSON string.
+     */
     @GET
     @Path("getAllProducts")
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,7 +73,12 @@ public class ProductAPI extends Application {
         Logger.getLogger(ProductAPI.class.getName()).log(Level.FINE, "getAllProducts : {0}", 0);
         return jsonb.toJson(pBean.getProducts());
     }
-    
+
+    /**
+     * Get Product.
+     * @param id This Product id.  
+     * @return this Product object as JSON string.
+     */
     @GET
     @Path("getProduct/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -74,7 +87,12 @@ public class ProductAPI extends Application {
         ProductInfo p = pBean.getProduct(id);
         return jsonb.toJson(p != null ? p : new Product());
     }
-    
+
+    /**
+     * Get Products list.
+     * @param name This Product name.  
+     * @return this Product object as JSON string.
+     */
     @GET
     @Path("getProducts/{name}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -85,6 +103,13 @@ public class ProductAPI extends Application {
     }
 
     //http://127.0.0.1:8080/gradle-war/rest/ProductAPI/setProduct/{"product":{"adddate": "2020-09-10T07:05:52.234Z[UTC]","id": 1,"name": "p11","price": 12.12}}
+    
+    /**
+     * Set Product.
+     * @param obj Is JSON string.
+     * example: {"product":{"adddate": "2020-09-10T07:05:52.234Z[UTC]","id": 1,"name": "p11","price": 12.12}}
+     * @return this Product object as JSON string.
+     */
     @POST
     @Path("setProduct/{obj}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -100,7 +125,12 @@ public class ProductAPI extends Application {
             return (jsonb.toJson("JsonParsingException"));
         }
     }
-    
+
+    /**
+     * Remove Product.
+     * @param id is Product id.  
+     * @return is removed Product object.
+     */
     @DELETE
     @Path("removeProduct/{id}")
     public String removeProduct(@PathParam("id") Integer id) {

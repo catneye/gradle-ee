@@ -16,9 +16,34 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ProductBeanRemote {
+    /**
+     * Gets all Products list.
+     *
+     * @return this Product objects.
+     */
     public List<ProductInfo> getProducts();
+    /**
+     * Get Product.
+     * @param id This Product id.  
+     * @return this Product object.
+     */
     public ProductInfo getProduct(Integer id);
+    /**
+     * Get Products list.
+     * @param name This Product name.  
+     * @return this Product objects.
+     */
     public List<ProductInfo> getProducts(String name);
+    /**
+     * Set Product.
+     * @param product Is object.
+     * @return this modified Product object.
+     */
     public ProductInfo setProduct(ProductInfo product);
+    /**
+     * Remove Product.
+     * @param id is Product id.  
+     * @return is removed Product object.
+     */
     public ProductInfo removeProduct(Integer id);
 }

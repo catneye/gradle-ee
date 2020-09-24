@@ -13,5 +13,9 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface MessageSenderBeanRemote {
+    /**
+     * Send simple text message to jms queue.
+     * @param msg This message text.  
+     */
     public void sendTextMessage(String msg);
 }

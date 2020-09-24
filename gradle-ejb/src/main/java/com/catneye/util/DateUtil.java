@@ -21,17 +21,13 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-/**
- *
- * @author plintus
- */
 public class DateUtil {
     
     /**
      * Calls {@link #asLocalDate(Date, ZoneId)} with the system default time
      * zone.
-     * @param date
-     * @return 
+     * @param date is java.util.Date
+     * @return in LocalDate
      */
     public static LocalDate asLocalDate(java.util.Date date) {
         return asLocalDate(date, ZoneId.systemDefault());
@@ -207,6 +203,12 @@ public class DateUtil {
         return asXMLGregorianCalendar(asUtilDate(date, ZoneId.systemDefault()));
     }
 
+    /**
+     * Check dateformat string
+     *
+     * @param dateString
+     * @return String for SimpleDateFormat
+     */
     public static String determineDate(String dateString) {
         Map<String, String> DATE_FORMAT_REGEXPS = new HashMap<String, String>() {
             {
@@ -256,6 +258,12 @@ public class DateUtil {
         return null;
     }
 
+    /**
+     * Parse date from string with Calls {@link #determineDate(String)}
+     *
+     * @param date
+     * @return java.util.Date
+     */
     public static Date parseDate(String date) {
         Date ret = null;
         if ((date != null) && (!date.isEmpty())) {
@@ -264,20 +272,6 @@ public class DateUtil {
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
                 ret = sdf.parse(date);
             } catch (ParseException ex) {
-            }
-        }
-        return ret;
-    }
-
-    public static Date parseDateCheck(String date) {
-        Date ret = null;
-        if ((date != null) && (!date.isEmpty())) {
-            try {
-                String format = determineDate(date);
-                SimpleDateFormat sdf = new SimpleDateFormat(format);
-                ret = sdf.parse(date);
-            } catch (ParseException ex) {
-                throw new WrongDateException(ex.getMessage());
             }
         }
         return ret;
