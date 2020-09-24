@@ -11,6 +11,7 @@ package com.catneye.util;
  */
 public interface Constants {
     public String SERVICE_NAME = "Product service";
-    public String SERVICE_BEAN_NAME
-            = "java:global/gradle-ear/gradle-ejb/ProductBean!com.catneye.bean.ProductBeanRemote";
+    public String SERVICE_BEAN_NAME = "java:global/gradle-ear/gradle-ejb/ProductBean!com.catneye.bean.ProductBeanRemote";
+    public String MESSAGE_SENDER_BEAN_NAME = "java:global/gradle-ear/gradle-ejb/MessageSenderBean!com.catneye.bean.MessageSenderBeanRemote";
+    public String QUEUE_NAME="/jms/queue/SkeletonQueue";
 }
