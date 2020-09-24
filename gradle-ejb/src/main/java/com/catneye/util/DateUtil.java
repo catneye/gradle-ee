@@ -34,8 +34,10 @@ public class DateUtil {
     }
 
     /**
-     * Creates {@link LocalDate} from {@code java.util.Date} or it's subclasses.
-     * Null-safe.
+     * Creates {@link LocalDate} from {@code java.util.Date} or it's subclasses.Null-safe.
+     * @param date
+     * @param zone
+     * @return 
      */
     public static LocalDate asLocalDate(java.util.Date date, ZoneId zone) {
         if (date == null) {
@@ -52,6 +54,8 @@ public class DateUtil {
     /**
      * Calls {@link #asLocalDateTime(Date, ZoneId)} with the system default time
      * zone.
+     * @param date
+     * @return 
      */
     public static LocalDateTime asLocalDateTime(java.util.Date date) {
         return asLocalDateTime(date, ZoneId.systemDefault());
@@ -59,7 +63,10 @@ public class DateUtil {
 
     /**
      * Creates {@link LocalDateTime} from {@code java.util.Date} or it's
-     * subclasses. Null-safe.
+     * subclasses.Null-safe.
+     * @param date
+     * @param zone
+     * @return 
      */
     public static LocalDateTime asLocalDateTime(java.util.Date date, ZoneId zone) {
         if (date == null) {
@@ -76,14 +83,15 @@ public class DateUtil {
     /**
      * Calls {@link #asUtilDate(Object, ZoneId)} with the system default time
      * zone.
+     * @param date
+     * @return 
      */
     public static java.util.Date asUtilDate(Object date) {
         return asUtilDate(date, ZoneId.systemDefault());
     }
 
     /**
-     * Creates a {@link java.util.Date} from various date objects. Is null-safe.
-     * Currently supports:<ul>
+     * Creates a {@link java.util.Date} from various date objects.Is null-safe. Currently supports:<ul>
      * <li>{@link java.util.Date}
      * <li>{@link java.sql.Date}
      * <li>{@link java.sql.Timestamp}
@@ -93,6 +101,7 @@ public class DateUtil {
      * <li>{@link java.time.Instant}
      * </ul>
      *
+     * @param date
      * @param zone Time zone, used only if the input object is LocalDate or
      * LocalDateTime.
      *
@@ -131,7 +140,9 @@ public class DateUtil {
 
     /**
      * Creates an {@link Instant} from {@code java.util.Date} or it's
-     * subclasses. Null-safe.
+     * subclasses.Null-safe.
+     * @param date
+     * @return 
      */
     public static Instant asInstant(Date date) {
         if (date == null) {
@@ -144,6 +155,8 @@ public class DateUtil {
     /**
      * Calls {@link #asZonedDateTime(Date, ZoneId)} with the system default time
      * zone.
+     * @param date
+     * @return 
      */
     public static ZonedDateTime asZonedDateTime(Date date) {
         return asZonedDateTime(date, ZoneId.systemDefault());
@@ -151,7 +164,10 @@ public class DateUtil {
 
     /**
      * Creates {@link ZonedDateTime} from {@code java.util.Date} or it's
-     * subclasses. Null-safe.
+     * subclasses.Null-safe.
+     * @param date
+     * @param zone
+     * @return 
      */
     public static ZonedDateTime asZonedDateTime(Date date, ZoneId zone) {
         if (date == null) {
@@ -164,6 +180,8 @@ public class DateUtil {
     /**
      * Calls {@link #asUtilDate(Object, ZoneId)} with the system default time
      * zone.
+     * @param date
+     * @return 
      */
     public static java.util.GregorianCalendar asUtilGregorianCalendar(Object date) {
         GregorianCalendar gc = new GregorianCalendar();
@@ -197,6 +215,8 @@ public class DateUtil {
     /**
      * Calls {@link #asUtilDate(Object, ZoneId)} with the system default time
      * zone.
+     * @param date
+     * @return 
      */
     public static XMLGregorianCalendar asXMLGregorianCalendar(Object date) {
 

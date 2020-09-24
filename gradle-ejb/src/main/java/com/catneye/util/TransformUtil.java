@@ -73,8 +73,8 @@ public class TransformUtil {
         Class scls = source.getClass();
 
         Field[] tfields = tcls.getDeclaredFields();
-        //Logger.getLogger(UtilsBean.class.getName()).log(Level.INFO, "target fields: {0}", tcls.getDeclaredFields());
-        //Logger.getLogger(UtilsBean.class.getName()).log(Level.INFO, "source fields: {0}", scls.getDeclaredFields());
+        //Logger.getLogger(UtilsBean.class.getName()).log(Level.FINE, "target fields: {0}", tcls.getDeclaredFields());
+        //Logger.getLogger(UtilsBean.class.getName()).log(Level.FINE, "source fields: {0}", scls.getDeclaredFields());
         for (Field tfield : tfields) {
             //Annotation annotation = tfield.getAnnotation(Updatable.class);
             //if (annotation != null && !((Updatable)annotation).value()) continue;
