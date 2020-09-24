@@ -5,6 +5,7 @@
  */
 package com.catneye.servlet;
 
+import com.catneye.bean.MessageSenderBeanRemote;
 import com.catneye.bean.ProductBeanRemote;
 import com.catneye.dto.ProductInfo;
 import com.catneye.entity.Product;
@@ -39,44 +40,46 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("/ProductAPI")
 public class ProductAPI extends Application {
-
+    
     @EJB
     ProductBeanRemote pBean;
-
+    @EJB
+    MessageSenderBeanRemote msgBean;
+    
     JsonbConfig jsonconfig = new JsonbConfig().setProperty("jsonb.to.json.encoding", "UTF-8");
     Jsonb jsonb = JsonbBuilder.create(jsonconfig);
-
+    
     public ProductAPI() {
         try {
-            String lookupName = Constants.SERVICE_BEAN_NAME;
-            pBean = (ProductBeanRemote) InitialContext.doLookup(lookupName);
+            pBean = (ProductBeanRemote) InitialContext.doLookup(Constants.SERVICE_BEAN_NAME);
+            msgBean = (MessageSenderBeanRemote) InitialContext.doLookup(Constants.MESSAGE_SENDER_BEAN_NAME);
         } catch (NamingException ex) {
             Logger.getLogger(ProductAPI.class.getName()).log(Level.SEVERE, "ProductAPI : {0}", ex);
         }
     }
-
+    
     @GET
     @Path("getAllProducts")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllProducts() {
-        Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "getAllProducts : {0}", 0);
+        Logger.getLogger(ProductAPI.class.getName()).log(Level.FINE, "getAllProducts : {0}", 0);
         return jsonb.toJson(pBean.getProducts());
     }
-
+    
     @GET
     @Path("getProduct/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getProduct(@PathParam("id") Integer id) {
-        Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "getProduct : {0}", id);
+        Logger.getLogger(ProductAPI.class.getName()).log(Level.FINE, "getProduct : {0}", id);
         ProductInfo p = pBean.getProduct(id);
         return jsonb.toJson(p != null ? p : new Product());
     }
-
+    
     @GET
     @Path("getProducts/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getProducts(@PathParam("name") String name) {
-        Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "getProducts : {0}", name);
+        Logger.getLogger(ProductAPI.class.getName()).log(Level.FINE, "getProducts : {0}", name);
         List<ProductInfo> ps = pBean.getProducts(name);
         return jsonb.toJson(ps);
     }
@@ -87,7 +90,7 @@ public class ProductAPI extends Application {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String setProduct(@PathParam("obj") String obj) {
-        Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "setProduct : {0}", obj);
+        Logger.getLogger(ProductAPI.class.getName()).log(Level.FINE, "setProduct : {0}", obj);
         try {
             JsonReader jsonReader = Json.createReader(new StringReader(obj));
             JsonObject baseJson = jsonReader.readObject();
@@ -97,12 +100,18 @@ public class ProductAPI extends Application {
             return (jsonb.toJson("JsonParsingException"));
         }
     }
-
+    
     @DELETE
     @Path("removeProduct/{id}")
     public String removeProduct(@PathParam("id") Integer id) {
-        Logger.getLogger(ProductAPI.class.getName()).log(Level.INFO, "removeProduct : {0}", id);
+        Logger.getLogger(ProductAPI.class.getName()).log(Level.FINE, "removeProduct : {0}", id);
         ProductInfo p = pBean.removeProduct(id);
+        //Send jms message
+        msgBean.sendTextMessage(new StringBuilder()
+                .append("Product id:")
+                .append(id)
+                .append("removed ")
+                .toString());
         return jsonb.toJson(p);
     }
 }
