@@ -64,12 +64,12 @@ public class TransformUtil {
             tfield.setAccessible(true);
 
             try {
-                Logger.getLogger(TransformUtil.class.getName()).log(Level.INFO, "target field name: {0}", tfield.getName());
+                Logger.getLogger(TransformUtil.class.getName()).log(Level.FINE, "target field name: {0}", tfield.getName());
                 Field sfield = scls.getDeclaredField(tfield.getName());
                 sfield.setAccessible(true);
 
-                Logger.getLogger(TransformUtil.class.getName()).log(Level.INFO, "target class: {0}", tfield.getType().toString());
-                Logger.getLogger(TransformUtil.class.getName()).log(Level.INFO, "source class: {0}", sfield.getType().toString());
+                Logger.getLogger(TransformUtil.class.getName()).log(Level.FINE, "target class: {0}", tfield.getType().toString());
+                Logger.getLogger(TransformUtil.class.getName()).log(Level.FINE, "source class: {0}", sfield.getType().toString());
 
                 Object sval = null;
                 Object tval = null;
@@ -97,7 +97,7 @@ public class TransformUtil {
                     }
                 }
             } catch (NoSuchFieldException ex) {
-                Logger.getLogger(TransformUtil.class.getName()).log(Level.INFO, "NoSuchFieldException: {0}", tfield.getName());
+                Logger.getLogger(TransformUtil.class.getName()).log(Level.SEVERE, "NoSuchFieldException: {0}", tfield.getName());
             }
 
         }
