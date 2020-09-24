@@ -51,7 +51,7 @@ public class ProductBean implements ProductBeanRemote {
             ret = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
             ret.setResult(true);
         } catch (NoResultException ex) {
-            Logger.getLogger(ProductBean.class.getName()).log(Level.WARNING, "getProduct : {0} NoResultException", id);
+            Logger.getLogger(ProductBean.class.getName()).log(Level.FINE, "getProduct : {0} NoResultException", id);
         }
         return ret;
     }
@@ -86,7 +86,7 @@ public class ProductBean implements ProductBeanRemote {
                 em.merge(data);
                 em.flush();
             } catch (NoResultException ex) {
-                Logger.getLogger(ProductBean.class.getName()).log(Level.INFO, "getProduct : {0} NoResultException, Create new ", product.getId());
+                Logger.getLogger(ProductBean.class.getName()).log(Level.FINE, "getProduct : {0} NoResultException, Create new ", product.getId());
             }
         }
         if (data == null) {
@@ -115,7 +115,7 @@ public class ProductBean implements ProductBeanRemote {
             ret.setResult(true);
             em.remove(data);
         } catch (NoResultException ex) {
-            Logger.getLogger(ProductBean.class.getName()).log(Level.INFO, "removeProduct : {0} NoResultException", id);
+            Logger.getLogger(ProductBean.class.getName()).log(Level.FINE, "removeProduct : {0} NoResultException", id);
         }
         return ret;
     }
