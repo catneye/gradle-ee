@@ -5,7 +5,7 @@
  */
 package com.catneye.bean;
 
-import com.catneye.dto.ProductInfo;
+import com.catneye.dto.ProductDto;
 import com.catneye.entity.Product;
 import com.catneye.util.TransformUtil;
 import java.util.ArrayList;
@@ -34,12 +34,12 @@ public class ProductBean implements ProductBeanRemote {
      * @return this Product objects.
      */
     @Override
-    public List<ProductInfo> getProducts() {
-        List<ProductInfo> ret = new ArrayList<>();
+    public List<ProductDto> getProducts() {
+        List<ProductDto> ret = new ArrayList<>();
         Query query = em.createNamedQuery("Product.findAll");
         List<Product> data = query.getResultList();
         for (Product p : data) {
-            ProductInfo pi = (ProductInfo) TransformUtil.clone(new ProductInfo(), p);
+            ProductDto pi = (ProductDto) TransformUtil.clone(new ProductDto(), p);
             pi.setResult(true);
             ret.add(pi);
         }
@@ -52,13 +52,13 @@ public class ProductBean implements ProductBeanRemote {
      * @return this Product object.
      */
     @Override
-    public ProductInfo getProduct(Integer id) {
-        ProductInfo ret = null;
+    public ProductDto getProduct(Integer id) {
+        ProductDto ret = null;
         try {
             Query query = em.createNamedQuery("Product.findById");
             query.setParameter("id", id);
             Product data = (Product) query.getSingleResult();
-            ret = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
+            ret = (ProductDto) TransformUtil.clone(new ProductDto(), data);
             ret.setResult(true);
         } catch (NoResultException ex) {
             Logger.getLogger(ProductBean.class.getName()).log(Level.FINE, "getProduct : {0} NoResultException", id);
@@ -72,13 +72,13 @@ public class ProductBean implements ProductBeanRemote {
      * @return this Product objects.
      */
     @Override
-    public List<ProductInfo> getProducts(String name) {
-        List<ProductInfo> ret = new ArrayList<>();
+    public List<ProductDto> getProducts(String name) {
+        List<ProductDto> ret = new ArrayList<>();
         Query query = em.createNamedQuery("Product.findByName");
         query.setParameter("name", name);
         List<Product> data = query.getResultList();
         for (Product p : data) {
-            ProductInfo pi = (ProductInfo) TransformUtil.clone(new ProductInfo(), p);
+            ProductDto pi = (ProductDto) TransformUtil.clone(new ProductDto(), p);
             pi.setResult(true);
             ret.add(pi);
         }
@@ -91,7 +91,7 @@ public class ProductBean implements ProductBeanRemote {
      * @return this modified Product object.
      */
     @Override
-    public ProductInfo setProduct(ProductInfo product) {
+    public ProductDto setProduct(ProductDto product) {
 
         Product data = null;
         if (product.getId() != null) {
@@ -118,7 +118,7 @@ public class ProductBean implements ProductBeanRemote {
             em.flush();
         }
 
-        ProductInfo pi = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
+        ProductDto pi = (ProductDto) TransformUtil.clone(new ProductDto(), data);
         pi.setResult(true);
         return pi;
     }
@@ -129,14 +129,14 @@ public class ProductBean implements ProductBeanRemote {
      * @return is removed Product object.
      */
     @Override
-    public ProductInfo removeProduct(Integer id) {
+    public ProductDto removeProduct(Integer id) {
 
-        ProductInfo ret = null;
+        ProductDto ret = null;
         try {
             Query query = em.createNamedQuery("Product.findById");
             query.setParameter("id", id);
             Product data = (Product) query.getSingleResult();
-            ret = (ProductInfo) TransformUtil.clone(new ProductInfo(), data);
+            ret = (ProductDto) TransformUtil.clone(new ProductDto(), data);
             ret.setResult(true);
             em.remove(data);
         } catch (NoResultException ex) {

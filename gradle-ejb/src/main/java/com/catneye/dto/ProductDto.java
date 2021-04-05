@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author plintus
  */
-public class ProductInfo {
+public class ProductDto extends DtoBase{
 
     private Integer id;
     private String name;

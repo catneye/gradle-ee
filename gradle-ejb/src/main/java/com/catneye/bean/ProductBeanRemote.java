@@ -5,7 +5,7 @@
  */
 package com.catneye.bean;
 
-import com.catneye.dto.ProductInfo;
+import com.catneye.dto.ProductDto;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -21,29 +21,29 @@ public interface ProductBeanRemote {
      *
      * @return this Product objects.
      */
-    public List<ProductInfo> getProducts();
+    public List<ProductDto> getProducts();
     /**
      * Get Product.
      * @param id This Product id.  
      * @return this Product object.
      */
-    public ProductInfo getProduct(Integer id);
+    public ProductDto getProduct(Integer id);
     /**
      * Get Products list.
      * @param name This Product name.  
      * @return this Product objects.
      */
-    public List<ProductInfo> getProducts(String name);
+    public List<ProductDto> getProducts(String name);
     /**
      * Set Product.
      * @param product Is object.
      * @return this modified Product object.
      */
-    public ProductInfo setProduct(ProductInfo product);
+    public ProductDto setProduct(ProductDto product);
     /**
      * Remove Product.
      * @param id is Product id.  
      * @return is removed Product object.
      */
-    public ProductInfo removeProduct(Integer id);
+    public ProductDto removeProduct(Integer id);
 }
